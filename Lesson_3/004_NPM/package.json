@@ -1,0 +1,14 @@
+{
+  "name": "lihozub-testmodule",
+  "version": "0.1.1",
+  "description": "Just publish npm testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lihozub"
+  ],
+  "author": "Eugene Stepanoff",
+  "license": "ISC"
+}
