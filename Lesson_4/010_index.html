@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NODE Rules!</title>
+</head>
+<body>
+
+<button>Get Data!!!</button>
+<div id="output"></div>
+
+<script>
+    var btn = document.querySelector('button');
+    var container = document.querySelector('#output');
+
+    function makeRequest(data) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'data');
+
+      xhr.onload = function () {
+        var data = JSON.parse(this.responseText);
+
+        for (var i = 0; i < data.length; i++) {
+          container.innerHTML += `Product: ${data[i].name} - $${data[i].price}<br>`;
+        }
+      };
+
+      xhr.onerror = function () {
+        console.log('error!');
+      };
+
+      xhr.send(data);
+    }
+
+    btn.onclick = function () {
+      console.log('click');
+      var data = '<h3>This is some data!</h3>';
+      makeRequest(data);
+    };
+</script>
+</body>
+</html>

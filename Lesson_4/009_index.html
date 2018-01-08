@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NODE Rules!</title>
+</head>
+<body>
+
+<button>Get Data!!!</button>
+<div id="output"></div>
+
+<script>
+    var btn = document.querySelector('button');
+    var container = document.querySelector('#output');
+
+    function makeRequest() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'request');
+
+      xhr.onload = function () {
+        container.innerHTML += this.responseText;
+      };
+
+      xhr.onerror = function () {
+        console.log('error!');
+      };
+
+      xhr.send();
+    }
+
+    btn.onclick = makeRequest;
+</script>
+</body>
+</html>
