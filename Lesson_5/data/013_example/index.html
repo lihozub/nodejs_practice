@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<h2>Press button to make request to server!</h2>
+<div>
+    <button>GET</button>
+</div>
+<div>
+    <button>POST</button>
+</div>
+<div id="output"></div>
+
+<script>
+  (function () {
+    var btns = document.querySelectorAll('button');
+    btns[0].addEventListener('click', function () {
+      var xhr = new XMLHttpRequest();
+      var str = encodeURIComponent('This is a sample GET request!<br>');
+
+      xhr.open('GET', `/test?text=${str}`);
+      xhr.onload = function () {
+        document.querySelector('#output').innerHTML += this.responseText;
+      };
+      xhr.send();
+    });
+
+    btns[1].addEventListener('click', function () {
+      var xhr = new XMLHttpRequest();
+      var str = encodeURIComponent('This is a sample POST request!<br>');
+      xhr.open('POST', `/test`);
+      xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      xhr.onload = function () {
+        document.querySelector('#output').innerHTML += this.responseText;
+      };
+      xhr.send(`text=${str}`);
+    });
+  }());
+</script>
+</body>
+</html>
