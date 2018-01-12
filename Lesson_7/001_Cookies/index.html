@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" id="name"></td>
+    </tr>
+    <tr>
+        <td>Value</td>
+        <td><input type="text" id="val"></td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+        <td align="right"><input type="button" value="Add Cookie" id="addBtn"></td>
+    </tr>
+</table>
+<script>
+    document.querySelector('#addBtn').onclick = function () {
+      var nameCookie = document.querySelector('#name').value;
+      var valueCookie = document.querySelector('#val').value;
+
+      var cookie = `${nameCookie}=${valueCookie}`;
+      document.cookie = cookie;
+    };
+</script>
+</body>
+</html>
