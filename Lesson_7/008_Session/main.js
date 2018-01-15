@@ -1,24 +1,26 @@
 const express = require('express');
-const cookieSession = require('cookie-session');
+const expressSession = require('express-session');
 
 const app = express();
 
-app.use(cookieSession({
-  // имя сессии
-  name: 'session',
-  // секретные ключи
-  keys: ['key1', 'key2']
+let secretValue = 'secret value';
+
+app.use(expressSession({
+  resave: false,
+  saveUninitialized: false,
+  secret: secretValue
 }));
 
 app.get('/', function (request, response) {
-  console.log(request.ip);
   
-  if (request.session.isNew) {
-    console.log('Session created!');
+  if (!request.session.flag) {
+    console.log('Set Session');
+    request.session.userName = 'Alex';
+    request.session.flag = true;
   }
   
-  request.session.views = (request.session.views || 0) + 1;
-  response.end(request.session.views + ' views');
+  console.log(request.session.userName);
+  response.end();
 });
 
 app.listen(8080);
