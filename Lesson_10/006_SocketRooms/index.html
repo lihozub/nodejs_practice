@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<button>Join room 1</button>
+<button>Join room 2</button>
+<h2></h2>
+<button>Get data</button>
+<h3><br></h3>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var btns = document.querySelectorAll('button');
+  var container = document.querySelector('h3');
+  var roomData = document.querySelector('h2');
+
+  var currentNameSpace = null;
+
+  btns[0].addEventListener('click', function () {
+    var namespace = io('/namespace');
+
+    namespace.on('connect', function () {
+      console.log('connected to namespace');
+      namespace.emit('btn_click', {btn: 1});
+    });
+
+    namespace.on('room_join', function (data) {
+      roomData.innerHTML = 'room ' + data.roomname + 'joined<br>';
+      currentNameSpace = namespace;
+      // namespace.disconnect();
+    });
+  });
+
+  btns[1].addEventListener('click', function () {
+    var namespace = io('/namespace');
+
+    namespace.on('connect', function () {
+      console.log('connected to namespace');
+      namespace.emit('btn_click', {btn: 2});
+    });
+
+    namespace.on('room_join', function (data) {
+      roomData.innerHTML = 'room ' + data.roomname + 'joined<br>';
+      currentNameSpace = namespace;
+      // namespace.disconnect();
+    });
+  });
+
+  btns[2].addEventListener('click', function () {
+    if (currentNameSpace) {
+      console.log(currentNameSpace);
+      currentNameSpace.emit('get_greeting');
+
+      currentNameSpace.on('greet', function (data) {
+        container.innerHTML += data.message + '<br>';
+
+        currentNameSpace.disconnect();
+        currentNameSpace = null;
+      });
+    } else {
+      container.innerHTML = 'join a room to get data!';
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<button id="btn1">Get data 1</button>
+<h3></h3>
+<button id="btn2">Get data 2</button>
+<h3></h3>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var btns = document.querySelectorAll('button');
+  var containers = document.querySelectorAll('h3');
+
+  btns[0].addEventListener('click', function () {
+    var socket = io.connect('http://localhost:8080');
+
+    socket.on('data', function (data) {
+      console.log(data);
+      containers[0].innerHTML += data.message + '<br>';
+
+      socket.emit('response', {message: 'client 1 got'});
+      socket.disconnect();
+    });
+  });
+
+  btns[1].addEventListener('click', function () {
+    var socket = io.connect('http://localhost:8080');
+
+    socket.on('data', function (data) {
+      console.log(data);
+      containers[1].innerHTML += data.message + '<br>';
+
+      socket.emit('response', {message: 'client 2 got'});
+      socket.disconnect();
+    });
+  });
+</script>
+</body>
+</html>
